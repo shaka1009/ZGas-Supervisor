@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <group>
+        <item android:title=""
+            android:icon="@drawable/ic_edit"
+            android:id="@+id/btnEdit"
+            app:showAsAction="ifRoom"
+            />
+    </group>
+
+    <group>
+        <item android:title=""
+            android:icon="@drawable/ic_delete"
+            android:id="@+id/btnDelete"
+            app:showAsAction="ifRoom"
+            />
+    </group>
+
+</menu>

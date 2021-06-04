@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">ZGas Supervisor</string>
+    <string name="title_activity_visor">Map</string>
+    <string name="version">v1.0.1</string>
+    <string name="desarrolladores">Jesús E. Magallanes Gervacio, Alberto Medina Bernal, Beatríz E. R. Magallanes</string>
+
+    <string name="pide_gas">Pide gas</string>
+    <string name="gestiona_pedidos">Gestiona tus pedidos</string>
+    <string name="consulta_puntos">Consulta tus puntos</string>
+
+    <string name="ingresa_tel">Ingresa tu número de celular</string>
+    <string name="codigo_pais">+52</string>
+    <string name="enviaremos_sms">Enviaremos un SMS con una clave de verificación.</string>
+
+
+    <string name="reintentar">Reintentar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="crear">Crear</string>
+    <string name="enviar">Enviar</string>
+    <string name="reenviar">Reenviar</string>
+    <string name="verificar">Verificar</string>
+    <string name="proceso_verificacion">Proceso de verificación</string>
+    <string name="msg_continuar">Para continuar es necesario ingresar el código que hemos enviado por mensaje de texto al número: </string>
+
+    <string name="home_pedir">Pedir Gas</string>
+    <string name="home_perfil">Perfil</string>
+    <string name="home_domicilios">Domicilios</string>
+    <string name="home_regalos">Regalos</string>
+    <string name="home_pedidos">Pedidos</string>
+    <string name="telefono">Teléfono</string>
+    <string name="datos_personales">Datos personales</string>
+    <string name="apellido_opcional">Apellido (opcional)</string>
+    <string name="nombre_requerido">Nombre (requerido)</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="perfil">Perfil</string>
+    <string name="confirmar_cierre_de_sesion">Confirmar Cierre de Sesión</string>
+
+    <string name="etiqueta">Etiqueta</string>
+    <string name="ejemplo_etiqueta">Casa, negocio, departamento…</string>
+    <string name="domiclio">Domiclio</string>
+    <string name="confirma_numero_exterior">Confirma número exterior</string>
+    <string name="ingresa_numero_exterior">Ingresa número exterior.</string>
+    <string name="numero_letra_interior">Número/letra interior</string>
+    <string name="ingresa_numero_interior_opc">Ingresa número interior (Opc).</string>
+    <string name="s_particular">Seña particular</string>
+    <string name="ejemplo_s_particular">Ejemplo: fachada verde, entre calle, vecindad, etc. (Opc).</string>
+    <string name="agregar_domicilio">Agregar Domicilio</string>
+    <string name="title_activity_home_domicilios_reg_map">Map</string>
+    <string name="ingresa_domicilio">Ingresa domicilio.</string>
+    <string name="zeta_premia">Zeta Premia</string>
+    <string name="sucursales">Sucursales</string>
+    <string name="acerca_de_app">Acerca de la App.</string>
+    <string name="domicilio">Domicilio</string>
+    <string name="numero_exterior">Número exterior</string>
+    <string name="no">No</string>
+    <string name="si">Sí</string>
+    <string name="elegir">Elegir</string>
+    <string name="solicitar">Solicitar</string>
+
+    <string name="realizar_pedido">Realizar Pedido</string>
+    <string name="total">Total: 0.00$</string>
+    <string name="cilindro30kg">Cilindro 30 Kg</string>
+    <string name="info_30kg">Gas LP en cilindro de 30 kg</string>
+    <string name="cilindro20kg">Cilindro 20 Kg</string>
+    <string name="info_20kg">Gas LP en cilindro de 20 kg</string>
+    <string name="cilindro10kg">Cilindro 10 Kg</string>
+    <string name="info_10kg">Gas LP en cilindro de 10 kg</string>
+    <string name="total00">Total: $0.00</string>
+
+    <string name="metodo_efectivo">Efectivo</string>
+    <string name="producto">Producto</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="precio">Precio</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="pago_en_efectivo">Pago en efectivo</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="haciendo_el_pedido">Haciendo el pedido...</string>
+    <string name="apellido_requerido">Apellido (requerido)</string>
+    <string name="numero_de_nomina">Número de nómina</string>
+    <string name="telefono_asignado">Teléfono asignado</string>
+
+    <string name="tfe_od_app_name" translation_description="Object Detection demo app [CHAR_LIMIT=40]">Face Recognition</string>
+    <string name="tfe_od_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
+</resources>

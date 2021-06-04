@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    >
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/white"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Confirmar petición de servicio"
+            android:fontFamily="@font/verdana"
+            android:textColor="@color/Gris3"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+
+            <TableLayout
+                android:id="@+id/table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center"
+                android:stretchColumns="0,1,2,3">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/verdana"
+                        android:text="Producto"
+                        android:textSize="14sp"
+                        android:textColor="@color/Gris4"/>
+                    <TextView
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/verdana"
+                        android:text="Cantidad"
+                        android:textSize="14sp"
+                        android:textColor="@color/Gris4"/>
+                    <TextView
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/verdana"
+                        android:text="Precio"
+                        android:textSize="14sp"
+                        android:textColor="@color/Gris4"/>
+                    <TextView
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/verdana"
+                        android:text="Subtotal"
+                        android:textSize="14sp"
+                        android:textColor="@color/Gris4"/>
+                </TableRow>
+            </TableLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/popupVerificarServicioCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/button_cancelar"
+                android:text="Cancelar"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/popupVerificarServicioConfirmar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/Verde"
+                style="@style/button_confirmar"
+                android:text="Confirmar"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

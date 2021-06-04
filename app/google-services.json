@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "117172375381",
+    "firebase_url": "https://zgas-proyecto-default-rtdb.firebaseio.com",
+    "project_id": "zgas-proyecto",
+    "storage_bucket": "zgas-proyecto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117172375381:android:f9203704580fc55f2ae9dc",
+        "android_client_info": {
+          "package_name": "zgas.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117172375381-vmb3459a8p4gf5dn1jb3cbpu38e78ael.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zgas.client",
+            "certificate_hash": "d6b46fceead266eaa7d98208abbd0c78ee2184ef"
+          }
+        },
+        {
+          "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiVMFfCIsXnhlfUZm3cSewn7HwA_Blz4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117172375381:android:66e0aa303f5dceae2ae9dc",
+        "android_client_info": {
+          "package_name": "zgas.operador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117172375381-i16jf8mr838plij1op60qv6kap0rjhra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zgas.operador",
+            "certificate_hash": "d6b46fceead266eaa7d98208abbd0c78ee2184ef"
+          }
+        },
+        {
+          "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiVMFfCIsXnhlfUZm3cSewn7HwA_Blz4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117172375381:android:ef3f39f4ab0935c32ae9dc",
+        "android_client_info": {
+          "package_name": "zgas.supervisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiVMFfCIsXnhlfUZm3cSewn7HwA_Blz4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117172375381-kqbkmu092t15c2l6s45m76d53ru2tdn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

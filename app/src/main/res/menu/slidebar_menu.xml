@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_perfil"
+            android:title="@string/perfil" />
+
+
+    </group>
+
+    <group
+        android:id="@+id/menu_mid"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_zetapremia"
+            android:title="@string/zeta_premia" />
+
+        <item
+            android:id="@+id/menu_sucursales"
+            android:title="@string/sucursales" />
+
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/acerca_de_app"
+            android:title="@string/acerca_de_app"/>
+
+        <item
+            android:id="@+id/cerrar_sesion"
+            android:title="@string/cerrar_sesion"/>
+    </group>
+
+</menu>
