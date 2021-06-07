@@ -32,7 +32,7 @@ public class RegistroProvider {
         map.put("telefono", registro.getTelefono());
         map.put("nombre", registro.getNombre());
         map.put("apellido", registro.getApellido());
-        return mDatabase.child(String.valueOf(registro.getNumNomina())).setValue(map);
+        return mDatabase.child(String.valueOf(registro.getNumNomina())).updateChildren(map);
     }
 
     public Task<Void> update(Registro registro) {

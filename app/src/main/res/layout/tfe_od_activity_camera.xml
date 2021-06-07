@@ -32,7 +32,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="org.tensorflow.demo.CameraActivity" >
+            tools:context="org.tensorflow.demo.CameraActivity">
 
         </FrameLayout>
 
@@ -55,7 +55,8 @@
 
     <include
         android:id="@+id/bottom_sheet_layout"
-        layout="@layout/tfe_od_layout_bottom_sheet" />
+        layout="@layout/tfe_od_layout_bottom_sheet"
+        android:visibility="gone"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,46 +75,56 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
+        android:layout_gravity="bottom|center"
         android:tint="@android:color/white"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_camera_white"
         android:layout_margin="16dp"
+        android:visibility="visible"
         />
 
 
-<!--    <View-->
-<!--        android:id="@+id/dummy"-->
-<!--        android:layout_width="1dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        app:layout_anchor="@id/fab_add"-->
-<!--        app:layout_anchorGravity="bottom|center" />-->
+    <!--    <View-->
+    <!--        android:id="@+id/dummy"-->
+    <!--        android:layout_width="1dp"-->
+    <!--        android:layout_height="80dp"-->
+    <!--        app:layout_anchor="@id/fab_add"-->
+    <!--        app:layout_anchorGravity="bottom|center" />-->
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fab_seach"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@android:drawable/ic_search_category_default"-->
-<!--        android:tint="@android:color/white"-->
-<!--        app:layout_anchorGravity="bottom|center"-->
-<!--        app:layout_anchor="@id/dummy" />-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab_seach"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@android:drawable/ic_search_category_default"-->
+    <!--        android:tint="@android:color/white"-->
+    <!--        app:layout_anchorGravity="bottom|center"-->
+    <!--        app:layout_anchor="@id/dummy" />-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_seach"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_search_category_default"
-            android:tint="@android:color/white"
-            android:layout_margin="16dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_seach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_search_category_default"
+        android:tint="@android:color/white"
+        android:layout_margin="16dp"
 
-            app:layout_anchor="@id/bottom_sheet_layout"
-            app:layout_anchorGravity="top|end"
-            />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="141dp"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/perfil" />
+        app:layout_anchor="@id/bottom_sheet_layout"
+        app:layout_anchorGravity="top|end"
+        android:visibility="invisible"
+        />
 
 
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="34878-scanner.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

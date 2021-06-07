@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
             //load_data();
 
 
-            Intent intent = new Intent(MainActivity.this, DetectorActivity.class);
+            //Intent intent = new Intent(MainActivity.this, DetectorActivity.class);
             //startActivity(intent);
 
 
-            //Intent intent = new Intent(MainActivity.this, Home.class);
+            Intent intent = new Intent(MainActivity.this, Home.class);
             startActivity(intent);
 
 

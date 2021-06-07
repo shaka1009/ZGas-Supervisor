@@ -127,6 +127,62 @@ tools:context=".HomeRegistrarOperador">
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
+                            android:src="@drawable/ic_baseline_camera_front"
+                            tools:ignore="ContentDescription" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayoutIA"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+
+
+                            <CheckBox
+                                android:id="@+id/checkBox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/primaryDarkColor"
+                                android:text="Inteligencia Artificial"
+                                android:checked="false"
+                                android:clickable="false"
+ />
+
+                            <Button
+                                android:id="@+id/button2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Subir"
+                                android:backgroundTint="@color/primaryColor"
+                                android:textColor="@color/white"/>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginEnd="30dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/ic_phone"
                             tools:ignore="ContentDescription" />
 
@@ -223,44 +279,6 @@ tools:context=".HomeRegistrarOperador">
                                 android:textSize="15sp" />
                         </LinearLayout>
                     </LinearLayout>
-
-
-
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_gravity="top"
-                            android:src="@drawable/perfil"
-                            tools:ignore="ContentDescription"
-                            android:id="@+id/imvFoto1"/>
-                        <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_gravity="top"
-                            android:src="@drawable/perfil"
-                            tools:ignore="ContentDescription"
-                            android:id="@+id/imvFoto2"/>
-                        <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_gravity="top"
-                            android:src="@drawable/perfil"
-                            tools:ignore="ContentDescription"
-                            android:id="@+id/imvFoto3"/>
-                    </LinearLayout>
-
 
 
                 </LinearLayout>

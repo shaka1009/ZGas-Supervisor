@@ -17,6 +17,7 @@
 package zgas.supervisor.IA;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,6 +44,7 @@ import android.util.Size;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -172,11 +174,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private FloatingActionButton fabAdd;
 
   //private HashMap<String, Classifier.Recognition> knownFaces = new HashMap<>();
-
+  String numNomina;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    numNomina = getIntent().getStringExtra("numNomina");
 
     fabAdd = findViewById(R.id.fab_add);
     fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +210,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
 
 
-    cargarDatosFB("73539");
+    //cargarDatosFB("73539");
 
 
   }
@@ -434,6 +438,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private void showAddFaceDialog(SimilarityClassifier.Recognition rec) {
 
+
+    Dialog popupEliminarDireccion;
+
+
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     LayoutInflater inflater = getLayoutInflater();
     View dialogLayout = inflater.inflate(R.layout.image_edit_dialog, null);
@@ -443,32 +451,46 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     tvTitle.setText("Add Face");
     ivFace.setImageBitmap(rec.getCrop());
-    etName.setHint("Input name");
+    etName.setHint(numNomina);
 
+    Button btnConfirmar = dialogLayout.findViewById(R.id.btnConfirmar);
+
+
+    btnConfirmar.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        String name = numNomina;
+        if (name.isEmpty()) {
+          return;
+        }
+
+
+
+        guardarDatosFB(numNomina, rec);
+
+
+
+        //knownFaces.put(name, rec);
+
+
+      }
+    });
+
+
+    /*
     builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
       @Override
       public void onClick(DialogInterface dlg, int i) {
 
-          String name = etName.getText().toString();
-          if (name.isEmpty()) {
-              return;
-          }
 
-          /*********************************************
-          guardarDatosFB("73539", rec);
-          guardarFotoCS("73539", rec.getCrop());
-          guardarObjectCS("73539", rec);
-           ****************************************************************/
-
-
-
-
-
-
-          //knownFaces.put(name, rec);
-          dlg.dismiss();
       }
     });
+
+    */
+
+
+
+
     builder.setView(dialogLayout);
     builder.show();
 
@@ -682,11 +704,14 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
         // ...
         Toast.makeText(DetectorActivity.this, "Object Subido Correctamente", Toast.LENGTH_SHORT).show();
+
+        setResult(RESULT_OK);
+        finish();
       }
     });
   }
 
-  private void guardarFotoCS(String numNomina, Bitmap crop) {
+  private void guardarFotoCS(String numNomina, Bitmap crop, SimilarityClassifier.Recognition rec) {
 
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -705,7 +730,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
       @Override
       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-        Toast.makeText(DetectorActivity.this, "Foto subida correctamente.", Toast.LENGTH_SHORT).show();
+        guardarObjectCS(numNomina, rec);
       }
     });
 
@@ -719,7 +744,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     registroProvider.createIA(numNomina, iaData).addOnCompleteListener(new OnCompleteListener<Void>() {
       @Override
       public void onComplete(@NonNull Task<Void> task) {
-        Toast.makeText(DetectorActivity.this, "Datos Actualizados Correctamente.", Toast.LENGTH_SHORT).show();
+        guardarFotoCS(numNomina, rec.getCrop(), rec);
       }
     });
 

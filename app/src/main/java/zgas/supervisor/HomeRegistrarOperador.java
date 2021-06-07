@@ -11,8 +11,11 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
@@ -33,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import zgas.supervisor.IA.DetectorActivity;
 import zgas.supervisor.includes.Popup;
 import zgas.supervisor.includes.Toolbar;
 import zgas.supervisor.models.Client;
@@ -44,13 +48,16 @@ public class HomeRegistrarOperador extends AppCompatActivity {
 
     EditText etNomina, etTelefono, etNombre, etApellido;
 
-    ImageView imvFoto1, imvFoto2, imvFoto3;
-
     FloatingActionButton btnFotoPerfil;
 
     CircleImageView cvFoto1;
 
     private Popup mPopup;
+
+    CheckBox checkBoxIA;
+    Button button2;
+    LinearLayout LinearLayoutIA;
+
 
 
 
@@ -82,29 +89,76 @@ public class HomeRegistrarOperador extends AppCompatActivity {
             }
         });
 
-
-        imvFoto1.setOnClickListener(new View.OnClickListener() {
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                abrirCamara(1);
+                valNomina();
             }
         });
+    }
 
-        imvFoto2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirCamara(2);
+    private void valNomina() {
+
+
+
+        try {
+
+            registro.setNumNomina(etNomina.getText().toString());
+
+
+            if((Integer.parseInt(registro.getNumNomina()))   ==0)
+            {
+                Toast.makeText(this, "Error en número de nómina, no puede ser 0.", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        imvFoto3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirCamara(3);
-            }
-        });
 
 
+            //Validar en DB
+            try {
+                registroProvider.getOperador(String.valueOf(registro.getNumNomina())).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            try {
+                                if(Integer.parseInt(Objects.requireNonNull(snapshot.child("finish").getValue()).toString()) == 1)
+                                    Toast.makeText(HomeRegistrarOperador.this, "Ya existe un número de nómina.", Toast.LENGTH_SHORT).show();
+                                else
+                                {
+                                    siguiente();
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                siguiente();
+                            }
+
+
+                        }
+                        else
+                        {
+                            siguiente();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+            }catch (Exception e) { }
+            //
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Error en número de nómina: no has ingresado un número", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void siguiente()
+    {
+        Intent intent = new Intent(HomeRegistrarOperador.this, DetectorActivity.class);
+        intent.putExtra("numNomina", etNomina.getText().toString());
+        startActivityForResult(intent, 2);
     }
 
     private void declaration()
@@ -124,11 +178,13 @@ public class HomeRegistrarOperador extends AppCompatActivity {
 
         btnFotoPerfil = findViewById(R.id.btnFotoPerfil);
 
-        imvFoto1 = findViewById(R.id.imvFoto1);
-        imvFoto2 = findViewById(R.id.imvFoto2);
-        imvFoto3 = findViewById(R.id.imvFoto3);
-
         cvFoto1 = findViewById(R.id.ivPerfil);
+
+        checkBoxIA = findViewById(R.id.checkBox);
+        LinearLayoutIA = findViewById(R.id.LinearLayoutIA);
+        button2 = findViewById(R.id.button2);
+
+        etNomina.requestFocus();
     }
 
     private void abrirCamara(int code){
@@ -149,94 +205,86 @@ public class HomeRegistrarOperador extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             imgBitmap1 = (Bitmap) extras.get("data");
-            imvFoto1.setImageBitmap(imgBitmap1);
             cvFoto1.setImageBitmap(imgBitmap1);
             valFoto1 = true;
+        }
 
-        }
-        else if (requestCode == 2 && resultCode == RESULT_OK) {
+        if (requestCode == 2 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            imgBitmap2 = (Bitmap) extras.get("data");
-            imvFoto2.setImageBitmap(imgBitmap2);
-            valFoto2 = true;
-        }
-        else if (requestCode == 3 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            imgBitmap3 = (Bitmap) extras.get("data");
-            imvFoto3.setImageBitmap(imgBitmap3);
-            valFoto3 = true;
+            checkBoxIA.setChecked(true);
         }
     }
 
     private boolean valFoto()
     {
-        if(valFoto1 && valFoto2 && valFoto3)
+        if(valFoto1)
             return true;
         else
             return false;
     }
 
-
-
-
-
     private void valDatos()
     {
-        try {
 
-            registro.setNumNomina(etNomina.getText().toString());
-
-
-            if((Integer.parseInt(registro.getNumNomina()))   ==0)
-            {
-                Toast.makeText(this, "Error en número de nómina, no puede ser 0.", Toast.LENGTH_SHORT).show();
-            }
-
-
-            //Validar en DB
+        if(!valFoto())
+            Toast.makeText(this, "Necesitas tomar foto de perfil.", Toast.LENGTH_SHORT).show();
+        else
+        {
             try {
 
-                registroProvider.getOperador(String.valueOf(registro.getNumNomina())).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if(Integer.parseInt(Objects.requireNonNull(snapshot.child("finish").getValue()).toString()) == 1)
-                                Toast.makeText(HomeRegistrarOperador.this, "Ya existe un número de nómina.", Toast.LENGTH_SHORT).show();
+                registro.setNumNomina(etNomina.getText().toString());
+
+
+                if((Integer.parseInt(registro.getNumNomina()))   ==0)
+                {
+                    Toast.makeText(this, "Error en número de nómina, no puede ser 0.", Toast.LENGTH_SHORT).show();
+                }
+
+
+                //Validar en DB
+                try {
+                    registroProvider.getOperador(String.valueOf(registro.getNumNomina())).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                try {
+                                    if(Integer.parseInt(Objects.requireNonNull(snapshot.child("finish").getValue()).toString()) == 1)
+                                        Toast.makeText(HomeRegistrarOperador.this, "Ya existe un número de nómina.", Toast.LENGTH_SHORT).show();
+                                    else
+                                        valTelefono(registro.getNumNomina());
+                                }
+                                catch (Exception e)
+                                {
+                                    valTelefono(registro.getNumNomina());
+                                }
+
+                            }
                             else
-                                valTelefono();
-
-                        }
-                        else
-                        {
-                            valTelefono();
+                            {
+                                valTelefono(registro.getNumNomina());
+                            }
                         }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
-                    }
+                }catch (Exception e) { }
+                //
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
-            }catch (Exception e)
-            {
 
             }
-            //
 
+            catch (Exception e)
+            {
+                Toast.makeText(this, "Error en número de nómina: no has ingresado un número", Toast.LENGTH_SHORT).show();
+            }
 
         }
-
-        catch (Exception e)
-        {
-            Toast.makeText(this, "Error en número de nómina: no has ingresado un número", Toast.LENGTH_SHORT).show();
-        }
-
-
     }
 
-    private void valTelefono()
+    private void valTelefono(String numNomina)
     {
         registro.setTelefono(etTelefono.getText().toString().replaceAll(" ", ""));
 
@@ -254,18 +302,11 @@ public class HomeRegistrarOperador extends AppCompatActivity {
         }
         else
         {
-            valNombreApellido();
+            valNombreApellido(numNomina);
         }
-
-
-
-
-
-
-
     }
 
-    private void valNombreApellido() {
+    private void valNombreApellido(String numNomina) {
 
         registro.setNombre(etNombre.getText().toString());
         registro.setApellido(etApellido.getText().toString());
@@ -288,7 +329,7 @@ public class HomeRegistrarOperador extends AppCompatActivity {
 
             registroProvider.create(registro).addOnCompleteListener(taskCreate -> {
                 if (taskCreate.isSuccessful()) {
-                    subirFotos();
+                    subirFotos(numNomina);
                 }
                 else {
                     Toast.makeText(HomeRegistrarOperador.this, "Error en el registro.", Toast.LENGTH_SHORT).show();
@@ -297,7 +338,12 @@ public class HomeRegistrarOperador extends AppCompatActivity {
         }
     }
 
-    private void subirFotos() {
+    private void subirFotos(String numNomina) {
+
+
+
+
+
 
         int quality=100;
         int width = 2160;
@@ -305,9 +351,7 @@ public class HomeRegistrarOperador extends AppCompatActivity {
         if(valFoto())
         {
             FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference foto1 = storage.getReference().child(registro.getNumNomina()).child("Foto1.jpg");
-            StorageReference foto2 = storage.getReference().child(registro.getNumNomina()).child("Foto2.jpg");
-            StorageReference foto3 = storage.getReference().child(registro.getNumNomina()).child("Foto3.jpg");
+            StorageReference foto1 = storage.getReference().child(registro.getNumNomina() + "Perfil.jpg");
 
             ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
 
@@ -324,47 +368,17 @@ public class HomeRegistrarOperador extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
-                    imgBitmap2 = Bitmap.createScaledBitmap(imgBitmap2, width, height, false);
-                    imgBitmap2.compress(Bitmap.CompressFormat.JPEG, quality, baos2);
-                    byte[] data2 = baos2.toByteArray();
-
-                    UploadTask uploadTask2 = foto2.putBytes(data2);
-                    uploadTask2.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
+                    registroProvider.update(registro).addOnCompleteListener(taskCreate -> {
+                        if (taskCreate.isSuccessful()) {
+                            Toast.makeText(HomeRegistrarOperador.this, "Registro exitoso.", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
-                            imgBitmap3 = Bitmap.createScaledBitmap(imgBitmap3, width, height, false);
-                            imgBitmap3.compress(Bitmap.CompressFormat.JPEG, quality, baos3);
-                            byte[] data3 = baos3.toByteArray();
-
-                            UploadTask uploadTask3 = foto3.putBytes(data3);
-                            uploadTask3.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle unsuccessful uploads
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    registroProvider.update(registro).addOnCompleteListener(taskCreate -> {
-                                        if (taskCreate.isSuccessful()) {
-                                            Toast.makeText(HomeRegistrarOperador.this, "Registro exitoso.", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                        else {
-                                            Toast.makeText(HomeRegistrarOperador.this, "Error en el registro.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            });
+                        else {
+                            Toast.makeText(HomeRegistrarOperador.this, "Error en el registro.", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+
                 }
             });
         }
