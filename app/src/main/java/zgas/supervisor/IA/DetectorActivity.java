@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -105,6 +106,8 @@ import zgas.supervisor.models.Client;
 import zgas.supervisor.models.IAData;
 import zgas.supervisor.providers.RegistroProvider;
 
+import static zgas.supervisor.HomeRegistrarOperador.checkedFoto;
+
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
  * objects.
@@ -182,6 +185,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     numNomina = getIntent().getStringExtra("numNomina");
 
+
+
     fabAdd = findViewById(R.id.fab_add);
     fabAdd.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -211,6 +216,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
 
     //cargarDatosFB("73539");
+
 
 
   }
@@ -436,8 +442,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   }
 
-  private void showAddFaceDialog(SimilarityClassifier.Recognition rec) {
 
+  boolean pressButton = false;
+  private void showAddFaceDialog(SimilarityClassifier.Recognition rec) {
 
     Dialog popupEliminarDireccion;
 
@@ -459,15 +466,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     btnConfirmar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        String name = numNomina;
-        if (name.isEmpty()) {
+
+
+        if(pressButton)
           return;
+        else {
+
+
+          Toast.makeText(DetectorActivity.this, "Subiendo foto, espere un momento.", Toast.LENGTH_SHORT).show();
+          pressButton = true;
+          String name = numNomina;
+          if (name.isEmpty()) {
+            return;
+          }
+          guardarDatosFB(numNomina, rec);
         }
-
-
-
-        guardarDatosFB(numNomina, rec);
-
 
 
         //knownFaces.put(name, rec);
@@ -475,6 +488,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
       }
     });
+
+
 
 
     /*
@@ -490,11 +505,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
 
 
+    try {
+      builder.setView(dialogLayout);
+      builder.show();
+    }
+    catch (Exception e)
+    {
 
-    builder.setView(dialogLayout);
-    builder.show();
+    }
 
-  }
+
+
+
+    }
+
+
 
 
 
@@ -692,6 +717,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     Uri file = Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/IA", "IA.data"));
     uploadTask = storageRef.putFile(file);
 
+
+
+
 // Register observers to listen for when the download is done or if it fails
     uploadTask.addOnFailureListener(new OnFailureListener() {
       @Override
@@ -705,8 +733,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         // ...
         Toast.makeText(DetectorActivity.this, "Object Subido Correctamente", Toast.LENGTH_SHORT).show();
 
-        setResult(RESULT_OK);
+
+
+
+
+        checkedFoto = true;
         finish();
+
       }
     });
   }

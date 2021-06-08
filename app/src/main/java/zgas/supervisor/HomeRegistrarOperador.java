@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +47,8 @@ import zgas.supervisor.providers.RegistroProvider;
 
 public class HomeRegistrarOperador extends AppCompatActivity {
 
+    public static boolean checkedFoto = false;
+
     EditText etNomina, etTelefono, etNombre, etApellido;
 
     FloatingActionButton btnFotoPerfil;
@@ -66,9 +69,20 @@ public class HomeRegistrarOperador extends AppCompatActivity {
 
     AuthProvider mAuthProvider;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(checkedFoto)
+            checkBoxIA.setChecked(true);
+        else
+            checkBoxIA.setChecked(false);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkedFoto=false;
         setContentView(R.layout.activity_home_registrar_operador);
         Toolbar.show(this, true);
         mPopup = new Popup(this, getApplicationContext(), findViewById(R.id.popupError));
@@ -185,6 +199,7 @@ public class HomeRegistrarOperador extends AppCompatActivity {
         button2 = findViewById(R.id.button2);
 
         etNomina.requestFocus();
+
     }
 
     private void abrirCamara(int code){
@@ -207,11 +222,25 @@ public class HomeRegistrarOperador extends AppCompatActivity {
             imgBitmap1 = (Bitmap) extras.get("data");
             cvFoto1.setImageBitmap(imgBitmap1);
             valFoto1 = true;
+            Log.d("DEP", "intent code: " + requestCode + "  resultCode: " + resultCode);
         }
 
-        if (requestCode == 2 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            checkBoxIA.setChecked(true);
+        else if (requestCode == 2) {
+            try {
+                Log.d("DEP", "data: " + data.getStringExtra("resultado"));
+
+                checkBoxIA.setChecked(true);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            Log.d("DEP", "intent code: " + requestCode + "  resultCode: " + resultCode);
+        }
+        else
+        {
+            Log.d("DEP", "intent code: " + requestCode + "  resultCode: " + resultCode);
         }
     }
 
@@ -371,6 +400,7 @@ public class HomeRegistrarOperador extends AppCompatActivity {
                     registroProvider.update(registro).addOnCompleteListener(taskCreate -> {
                         if (taskCreate.isSuccessful()) {
                             Toast.makeText(HomeRegistrarOperador.this, "Registro exitoso.", Toast.LENGTH_SHORT).show();
+                            checkedFoto=false;
                             finish();
                         }
                         else {
@@ -421,6 +451,7 @@ public class HomeRegistrarOperador extends AppCompatActivity {
     }
 
     private void backPress() {
+        checkedFoto=false;
         finish();
     }
 }
