@@ -1,5 +1,6 @@
 package zgas.supervisor;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -11,15 +12,19 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import zgas.supervisor.providers.AuthProvider;
+import zgas.supervisor.providers.DriverProvider;
 import zgas.supervisor.providers.GeofireProvider;
 
 public class HomeVisor extends FragmentActivity implements OnMapReadyCallback {
@@ -55,9 +60,13 @@ public class HomeVisor extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                new CameraPosition.Builder()
+                        .target(mCurrentLatLng)
+                        .zoom(15f)
+                        .build()
+        ));
     }
 
 
@@ -78,10 +87,60 @@ public class HomeVisor extends FragmentActivity implements OnMapReadyCallback {
                     }
                 }
 
-                LatLng driverLatLng = new LatLng(location.latitude, location.longitude);
-                Marker marker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("Conductor disponible" + key).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
-                marker.setTag(key);
-                mDriversMarkers.add(marker);
+                try {
+                    LatLng driverLatLng = new LatLng(location.latitude, location.longitude);
+
+
+                    DriverProvider driverProvider = new DriverProvider();
+
+                    driverProvider.getDriver(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if(snapshot.exists())
+                            {
+                                String nombre = snapshot.child("nombre").getValue().toString();
+                                String apellido = snapshot.child("apellido").getValue().toString();
+                                String telefono = snapshot.child("telefono").getValue().toString();
+
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title(nombre + " " + apellido + "\n" + telefono).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
+                                marker.setTag(key);
+                                mDriversMarkers.add(marker);
+                            }
+                            else
+                            {
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("Conductor disponible: " + key).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
+                                marker.setTag(key);
+                                mDriversMarkers.add(marker);
+                            }
+
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("Conductor disponible: " + key).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
+                            marker.setTag(key);
+                            mDriversMarkers.add(marker);
+                        }
+                    });
+
+
+
+
+
+                }
+                catch (Exception e)
+                {
+                    LatLng driverLatLng = new LatLng(location.latitude, location.longitude);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("Conductor disponible" + key).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
+                    marker.setTag(key);
+                    mDriversMarkers.add(marker);
+                }
+
+
             }
 
             @Override
